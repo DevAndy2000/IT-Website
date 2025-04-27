@@ -16,7 +16,7 @@ const App: React.FC = () => {
         <nav className="flex justify-between items-center px-8 max-w-7xl mx-auto">
           <div className="flex items-center">
             <img
-              src="/assets/logo.png"
+              src="/IT-Website/assets/logo.png"
               alt="StaffinITy Solutions Logo"
               className="h-24 cursor-pointer" // Add cursor-pointer if you want it to look clickable, but without any redirection
             />
