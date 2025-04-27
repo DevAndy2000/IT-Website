@@ -2,12 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
+    <!-- Add the base tag for proper routing -->
+    <base href="/" /> <!-- Update this to /IT-Website/ if using a subfolder -->
+
+    <!-- Update the favicon to use your logo -->
+    <link rel="icon" href="/assets/logo-home.png" type="image/png" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StaffinITy Solutions</title>
-    <link rel="icon" href="/assets/favicon.ico" />
+    <title>StaffinITy Solutions - IT Consulting and Solutions</title>
   </head>
-  <body class="bg-gray-900 text-white">
+  <body>
     <div id="root"></div>
-    <!-- Vite will automatically inject the correct script reference for your JS file here -->
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
