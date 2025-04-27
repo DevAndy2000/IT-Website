@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/DevAndy2000/IT-Website", 
+  "homepage": "https://github.com/DevAndy2000/IT-Website",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "predeploy": "npm run build",  // Build the app before deployment
-    "deploy": "gh-pages -d dist", // Deploy the 'dist' folder to GitHub Pages
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
   },
