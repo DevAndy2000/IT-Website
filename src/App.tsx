@@ -15,9 +15,10 @@ const App: React.FC = () => {
       <header className="bg-[#F6F5F1] text-gray-900 py-3 sticky top-0 z-50 shadow-lg">
         <nav className="flex justify-between items-center px-8 max-w-7xl mx-auto">
           <div className="flex items-center">
-	    <img src="/assets/logo.png" alt="StaffinITy Solutions Logo" className="h-24 cursor-pointer" />
-              className="h-24 cursor-pointer" // Add cursor-pointer if you want it to look clickable, but without any redirection
-            />
+            <a href="/" className="text-2xl font-bold text-gray-900 hover:text-teal-400 transition-all">
+              {/* Updated logo path */}
+              <img src="/logo.png" alt="StaffinITy Solutions Logo" className="h-24" />
+            </a>
           </div>
           <div className="space-x-8 flex items-center text-lg font-medium">
             <button
@@ -146,50 +147,71 @@ const App: React.FC = () => {
           {/* Contact Info */}
           <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl">
             <h2 className="text-3xl font-bold mb-6 text-teal-600">Contact Us</h2>
-            <p className="mb-6">We’d love to hear from you! Reach out to us for more information about our services, or if you’re ready to get started.</p>
-            <ul className="space-y-4">
-              <li className="flex items-center">
-                <span className="mr-4 text-teal-600">📞</span>
-                +1 (123) 456-7890
-              </li>
-              <li className="flex items-center">
-                <span className="mr-4 text-teal-600">✉</span>
-                contact@staffinity.com
-              </li>
-              <li className="flex items-center">
-                <span className="mr-4 text-teal-600">📍</span>
-                1234 IT Avenue, Tech City, TX
-              </li>
-            </ul>
+            <p className="text-lg mb-8">
+              Have any questions? Reach out to us using the contact details below, or fill out the form and we'll get back to you as soon as possible.
+            </p>
+            <div className="space-y-6">
+              <div className="flex items-center space-x-4">
+                <span className="text-teal-600">📧</span>
+                <span className="font-semibold">Email:</span> <span>info@staffinitysolutions.com</span>
+              </div>
+              <div className="flex items-center space-x-4">
+                <span className="text-teal-600">📞</span>
+                <span className="font-semibold">Phone:</span> <span>+1 945-348-0140</span>
+              </div>
+              <div className="flex items-center space-x-4">
+                <span className="text-teal-600">📍</span>
+                <span className="font-semibold">Address:</span> <span>5121 Collin McKinney Pkwy Ste 500 #1090, McKinney, TX 75070</span>
+              </div>
+            </div>
           </div>
+
           {/* Contact Form */}
           <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl">
-            <h2 className="text-3xl font-bold mb-6 text-teal-600">Get in Touch</h2>
-            <form>
-              <div className="mb-6">
+            <h3 className="text-2xl font-semibold mb-4">Get In Touch</h3>
+            <form
+              action="https://formspree.io/f/mpwdwpno"
+              method="POST"
+              className="space-y-4 text-left"
+            >
+              <div className="flex gap-4">
                 <input
                   type="text"
-                  className="w-full p-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  placeholder="Your Name"
+                  name="firstName"
+                  placeholder="First Name"
+                  className="w-1/2 p-3 border rounded"
+                  required
                 />
-              </div>
-              <div className="mb-6">
                 <input
-                  type="email"
-                  className="w-full p-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  placeholder="Your Email"
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  className="w-1/2 p-3 border rounded"
+                  required
                 />
               </div>
-              <div className="mb-6">
-                <textarea
-                  className="w-full p-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  rows={4}
-                  placeholder="Your Message"
-                />
-              </div>
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="Your Email"
+                className="w-full p-3 border rounded"
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone (optional)"
+                className="w-full p-3 border rounded"
+              />
+              <textarea
+                name="message"
+                required
+                placeholder="Your Message"
+                className="w-full p-3 border rounded h-32"
+              />
               <button
                 type="submit"
-                className="w-full bg-teal-600 text-white py-3 rounded-lg shadow-md hover:bg-teal-700 focus:outline-none"
+                className="w-full bg-teal-600 text-white py-3 rounded mt-4 hover:bg-teal-500 transition-all"
               >
                 Send Message
               </button>
@@ -197,10 +219,10 @@ const App: React.FC = () => {
           </div>
         </div>
       </section>
-      
-      {/* FOOTER SECTION */}
-      <footer className="bg-[#1D3557] text-white text-center py-6">
-        <p>&copy; 2025 StaffinITy Solutions. All Rights Reserved.</p>
+
+      {/* FOOTER */}
+      <footer className="text-center bg-gray-900 text-white py-6">
+        <p className="mt-4">&copy; 2025 StaffinITy Solutions. All rights reserved.</p>
       </footer>
     </div>
   );
