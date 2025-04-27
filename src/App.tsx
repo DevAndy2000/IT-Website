@@ -17,7 +17,7 @@ const App: React.FC = () => {
           <div className="flex items-center">
             <a href="/" className="text-2xl font-bold text-gray-900 hover:text-teal-400 transition-all">
               {/* Updated logo path */}
-              <img src="/logo.png" alt="StaffinITy Solutions Logo" className="h-24" />
+              <img src="/assets/logo.png" alt="StaffinITy Solutions Logo" className="h-24" />
             </a>
           </div>
           <div className="space-x-8 flex items-center text-lg font-medium">
