@@ -4,5 +4,5 @@ import Unocss from 'unocss/vite'
 
 export default defineConfig({
   plugins: [react(), Unocss()],
-  base: '/IT-Website/', // Adjust base path for GitHub Pages
+  base: '/', // Set to root for custom domain
 })
