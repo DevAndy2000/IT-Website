@@ -4,5 +4,5 @@ import Unocss from 'unocss/vite'
 
 export default defineConfig({
   plugins: [react(), Unocss()],
-  base: './',
+  base: '/IT-Website/',
 })
