@@ -1,20 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const App: React.FC = () => {
   // State for mobile menu toggle
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrollingUp, setScrollingUp] = useState(true); // Track if user is scrolling up
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrollingUp(currentScrollY < lastScrollY); // User is scrolling up if currentScrollY < lastScrollY
-      lastScrollY = currentScrollY;
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -26,9 +14,7 @@ const App: React.FC = () => {
   return (
     <div className="font-sans text-gray-900 overflow-x-hidden">
       {/* NAVIGATION BAR */}
-      <header
-        className={`bg-[#F6F5F1] text-gray-900 py-3 sticky top-0 z-50 shadow-lg ${scrollingUp ? 'transform translate-y-0' : 'transform -translate-y-16'}`}
-      >
+      <header className="bg-[#F6F5F1] text-gray-900 py-3 sticky top-0 z-50 shadow-lg">
         <nav className="flex justify-between items-center px-6 md:px-8 max-w-7xl mx-auto">
           <div className="flex items-center">
             <a href="/" className="text-2xl font-bold text-gray-900 hover:text-teal-400 transition-all">
