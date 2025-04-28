@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const App: React.FC = () => {
+  // State for mobile menu toggle
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -12,40 +15,79 @@ const App: React.FC = () => {
     <div className="font-sans text-gray-900 overflow-x-hidden">
       {/* NAVIGATION BAR */}
       <header className="bg-[#F6F5F1] text-gray-900 py-3 sticky top-0 z-50 shadow-lg">
-        <nav className="flex flex-wrap justify-between items-center px-6 md:px-8 max-w-7xl mx-auto">
-          <div className="flex items-center mb-2 md:mb-0">
+        <nav className="flex justify-between items-center px-6 md:px-8 max-w-7xl mx-auto">
+          <div className="flex items-center">
             <a href="/" className="text-2xl font-bold text-gray-900 hover:text-teal-400 transition-all">
               <img src="/assets/logo.png" alt="StaffinITy Solutions Logo" className="h-20 md:h-24" />
             </a>
           </div>
-          <div className="flex flex-wrap justify-center gap-4 items-center text-base md:text-lg font-medium">
+
+          {/* Mobile Hamburger Menu Icon */}
+          <div className="md:hidden flex items-center">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-2xl">
+              {isMenuOpen ? '✖' : '☰'}
+            </button>
+          </div>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex space-x-8 items-center text-lg font-medium">
             <button
               onClick={() => scrollToSection('services')}
-              className="py-2 px-4 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
+              className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
             >
               Services
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="py-2 px-4 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
+              className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
             >
               About Us
             </button>
             <button
               onClick={() => scrollToSection('why-choose-us')}
-              className="py-2 px-4 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
+              className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
             >
               Why Choose Us
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="py-2 px-4 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
+              className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
             >
               Contact Us
             </button>
           </div>
         </nav>
       </header>
+
+      {/* Mobile Menu - Displayed when isMenuOpen is true */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-[#F6F5F1] flex flex-col items-center space-y-4 p-6">
+          <button
+            onClick={() => { scrollToSection('services'); setIsMenuOpen(false); }}
+            className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300"
+          >
+            Services
+          </button>
+          <button
+            onClick={() => { scrollToSection('about'); setIsMenuOpen(false); }}
+            className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300"
+          >
+            About Us
+          </button>
+          <button
+            onClick={() => { scrollToSection('why-choose-us'); setIsMenuOpen(false); }}
+            className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300"
+          >
+            Why Choose Us
+          </button>
+          <button
+            onClick={() => { scrollToSection('contact'); setIsMenuOpen(false); }}
+            className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300"
+          >
+            Contact Us
+          </button>
+        </div>
+      )}
 
       {/* HERO SECTION */}
       <div
@@ -92,23 +134,20 @@ const App: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-teal-100">About Us</h2>
           <p className="text-lg md:text-xl mb-16 text-teal-100">
-            At StaffinITy Solutions LLC, we specialize in connecting top talent with exceptional opportunities. Our expertise spans staffing, project management, and strategic vendorship services across industries. With a passion for innovation and a commitment to excellence, we help businesses scale efficiently and confidently. Our team brings a people-first approach, ensuring tailored solutions for every client and candidate.
+            At StaffinITy Solutions LLC, we specialize in connecting top talent with exceptional opportunities. Our expertise spans staffing, project management, and strategic vendorship services across industries. With a passion for innovation and a commitment to excellence, we help businesses scale efficiently and confidently.
           </p>
 
           <div className="grid gap-12 md:grid-cols-2">
-            {/* Vision Card */}
             <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300">
               <h3 className="text-3xl font-semibold text-teal-600 mb-4">Vision</h3>
               <p className="text-lg leading-relaxed">
                 To be the leading partner in staffing and project solutions, empowering businesses and individuals to achieve their highest potential through innovation, trust, and excellence.
               </p>
             </div>
-
-            {/* Mission Card */}
             <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300">
               <h3 className="text-3xl font-semibold text-teal-600 mb-4">Mission</h3>
               <p className="text-lg leading-relaxed">
-                At StaffinITy Solutions LLC, our mission is to connect organizations with exceptional talent, deliver strategic project solutions, and build lasting partnerships. We are committed to driving growth, fostering innovation, and creating value for every client, candidate, and community we serve.
+                Our mission is to connect organizations with exceptional talent, deliver strategic project solutions, and build lasting partnerships. We are committed to driving growth, fostering innovation, and creating value for every client, candidate, and community we serve.
               </p>
             </div>
           </div>
@@ -126,9 +165,9 @@ const App: React.FC = () => {
               'Speed and Agility - Our team moves fast to match the right talent and deliver projects on time.',
               'Commitment to Quality - We don’t just meet expectations — we aim to exceed them with every partnership.',
               'Trusted Partnerships - Your success is our mission. We build long-term relationships based on trust and results.',
-            ].map((point, i) => (
-              <li key={i} className="flex items-center">
-                <span className="mr-4 text-teal-600">✔</span> {point}
+            ].map((item, idx) => (
+              <li key={idx} className="flex items-center">
+                <span className="mr-4 text-teal-600">✔</span> {item}
               </li>
             ))}
           </ul>
@@ -136,8 +175,8 @@ const App: React.FC = () => {
       </section>
 
       {/* CONTACT SECTION */}
-      <section id="contact" className="bg-blue-50 py-20 px-6 text-gray-900 pt-28">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
+      <section id="contact" className="bg-blue-50 py-20 px-4 text-gray-900 pt-28 overflow-x-hidden">
+        <div className="max-w-6xl mx-auto flex flex-col md:grid md:grid-cols-2 gap-12">
           {/* Contact Info */}
           <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl">
             <h2 className="text-3xl font-bold mb-6 text-teal-600">Contact Us</h2>
@@ -161,26 +200,26 @@ const App: React.FC = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl">
+          <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl mt-10 md:mt-0">
             <h3 className="text-2xl font-semibold mb-4">Get In Touch</h3>
             <form
               action="https://formspree.io/f/mpwdwpno"
               method="POST"
               className="space-y-4 text-left"
             >
-              <div className="flex gap-4">
+              <div className="flex flex-col md:flex-row gap-4">
                 <input
                   type="text"
                   name="firstName"
                   placeholder="First Name"
-                  className="w-1/2 p-3 border rounded"
+                  className="w-full md:w-1/2 p-3 border rounded"
                   required
                 />
                 <input
                   type="text"
                   name="lastName"
                   placeholder="Last Name"
-                  className="w-1/2 p-3 border rounded"
+                  className="w-full md:w-1/2 p-3 border rounded"
                   required
                 />
               </div>
