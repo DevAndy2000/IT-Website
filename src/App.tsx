@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
 const App: React.FC = () => {
+  // State for mobile menu toggle
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showHeader, setShowHeader] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isSticky, setIsSticky] = useState(false);
 
-  // Scroll detection
+  // Handle scroll to manage sticky header for desktop
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (window.innerWidth >= 768) {
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          setShowHeader(false);
-        } else {
-          setShowHeader(true);
-        }
+      if (window.scrollY > 50) {
+        setIsSticky(true);
       } else {
-        setShowHeader(true);
+        setIsSticky(false);
       }
-
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -28,13 +20,12 @@ const App: React.FC = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [lastScrollY]);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
     }
   };
 
@@ -42,54 +33,81 @@ const App: React.FC = () => {
     <div className="font-sans text-gray-900 overflow-x-hidden">
       {/* NAVIGATION BAR */}
       <header
-        className={`bg-[#F6F5F1] text-gray-900 py-2 md:py-3 fixed w-full top-0 z-40 shadow-lg transition-transform duration-300 ${
-          showHeader ? 'translate-y-0' : '-translate-y-full'
+        className={`bg-[#F6F5F1] text-gray-900 py-3 sticky top-0 z-50 shadow-lg ${
+          isSticky ? 'shadow-lg' : ''
         }`}
       >
         <nav className="flex justify-between items-center px-6 md:px-8 max-w-7xl mx-auto">
           <div className="flex items-center">
             <a href="/" className="text-2xl font-bold text-gray-900 hover:text-teal-400 transition-all">
-              <img src="/assets/logo.png" alt="StaffinITy Solutions Logo" className="h-16 md:h-20" />
+              <img src="/assets/logo.png" alt="StaffinITy Solutions Logo" className="h-20 md:h-24" />
             </a>
+          </div>
+
+          {/* Mobile Hamburger Menu Icon */}
+          <div className="md:hidden flex items-center">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-2xl">
+              {isMenuOpen ? '✖' : '☰'}
+            </button>
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-8 items-center text-lg font-medium">
-            {['services', 'about', 'why-choose-us', 'contact'].map((section, idx) => (
-              <button
-                key={idx}
-                onClick={() => scrollToSection(section)}
-                className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
-              >
-                {section.replace('-', ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
-              </button>
-            ))}
+            <button
+              onClick={() => scrollToSection('services')}
+              className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
+            >
+              Services
+            </button>
+            <button
+              onClick={() => scrollToSection('about')}
+              className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
+            >
+              About Us
+            </button>
+            <button
+              onClick={() => scrollToSection('why-choose-us')}
+              className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
+            >
+              Why Choose Us
+            </button>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300 transform hover:scale-105"
+            >
+              Contact Us
+            </button>
           </div>
         </nav>
       </header>
 
-      {/* Mobile Hamburger Button (Always Fixed) */}
-      <div className="md:hidden fixed top-4 right-4 z-50">
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="text-3xl p-2 bg-white rounded-full shadow-md transition-all"
-        >
-          {isMenuOpen ? '✖' : '☰'}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Displayed when isMenuOpen is true */}
       {isMenuOpen && (
-        <div className="md:hidden bg-[#F6F5F1] flex flex-col items-center space-y-4 p-6 pt-20 fixed top-0 left-0 right-0 z-40">
-          {['services', 'about', 'why-choose-us', 'contact'].map((section, idx) => (
-            <button
-              key={idx}
-              onClick={() => scrollToSection(section)}
-              className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300"
-            >
-              {section.replace('-', ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
-            </button>
-          ))}
+        <div className="md:hidden bg-[#F6F5F1] flex flex-col items-center space-y-4 p-6">
+          <button
+            onClick={() => { scrollToSection('services'); setIsMenuOpen(false); }}
+            className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300"
+          >
+            Services
+          </button>
+          <button
+            onClick={() => { scrollToSection('about'); setIsMenuOpen(false); }}
+            className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300"
+          >
+            About Us
+          </button>
+          <button
+            onClick={() => { scrollToSection('why-choose-us'); setIsMenuOpen(false); }}
+            className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300"
+          >
+            Why Choose Us
+          </button>
+          <button
+            onClick={() => { scrollToSection('contact'); setIsMenuOpen(false); }}
+            className="py-2 px-6 bg-[#1D3557] text-white rounded-full shadow-md hover:bg-[#457B9D] transition-all duration-300"
+          >
+            Contact Us
+          </button>
         </div>
       )}
 
@@ -97,7 +115,8 @@ const App: React.FC = () => {
       <div
         className="min-h-screen bg-cover bg-center relative text-white"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1498050108023-c5249f4df085')",
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1498050108023-c5249f4df085')",
         }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -112,9 +131,157 @@ const App: React.FC = () => {
       </div>
 
       {/* SERVICES SECTION */}
+      <section id="services" className="py-20 px-6 bg-white text-center pt-28">
+        <h2 className="text-4xl font-bold mb-12 text-teal-600">Our Solutions</h2>
+        <div className="grid gap-12 md:grid-cols-3">
+          {[{
+            title: 'IT Consulting & Staffing', 
+            desc: 'Expert guidance and customized staffing solutions to help you build the right teams and achieve your business goals.', 
+            icon: '🧑‍💻'
+          }, {
+            title: 'IT Solutions & Project Management', 
+            desc: 'Comprehensive IT solutions and end-to-end project management to streamline operations, enhance efficiency, and drive success.', 
+            icon: '⚙️'
+          }, {
+            title: 'Custom IT Solutions', 
+            desc: 'Tailored technology strategies and support services, designed to meet your business needs and ensure long-term growth and scalability.', 
+            icon: '💡'
+          }].map((s, i) => (
+            <div
+              key={i}
+              className="border rounded-lg p-8 hover:shadow-xl transition-all hover:-translate-y-1 bg-gray-50"
+            >
+              <div className="text-5xl mb-4">{s.icon}</div>
+              <h3 className="text-2xl font-semibold mb-2">{s.title}</h3>
+              <p>{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ABOUT US SECTION */}
+      <section id="about" className="py-20 px-6 bg-gradient-to-r from-teal-600 to-teal-800 text-white text-center pt-28">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold mb-12 text-teal-100">About Us</h2>
+          <p className="text-lg md:text-xl mb-16 text-teal-100">
+            At StaffinITy Solutions LLC, we specialize in connecting top talent with exceptional opportunities. Our expertise spans staffing, project management, and strategic vendorship services across industries. With a passion for innovation and a commitment to excellence, we help businesses scale efficiently and confidently.
+          </p>
+
+          <div className="grid gap-12 md:grid-cols-2">
+            <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300">
+              <h3 className="text-3xl font-semibold text-teal-600 mb-4">Vision</h3>
+              <p className="text-lg leading-relaxed">
+                To be the leading partner in staffing and project solutions, empowering businesses and individuals to achieve their highest potential through innovation, trust, and excellence.
+              </p>
+            </div>
+            <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl transform hover:scale-105 transition-all duration-300">
+              <h3 className="text-3xl font-semibold text-teal-600 mb-4">Mission</h3>
+              <p className="text-lg leading-relaxed">
+                Our mission is to connect organizations with exceptional talent, deliver strategic project solutions, and build lasting partnerships. We are committed to driving growth, fostering innovation, and creating value for every client, candidate, and community we serve.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* WHY CHOOSE US SECTION */}
+      <section id="why-choose-us" className="py-20 px-6 bg-white text-center pt-28">
+        <h2 className="text-4xl font-bold mb-6 text-teal-600">Why Choose Us</h2>
+        <div className="max-w-3xl mx-auto text-left">
+          <ul className="space-y-4">
+            {[
+              'Tailored Solutions - We customize staffing and project strategies to fit your unique business needs.',
+              'Talent-First Approach - We connect you with skilled, reliable, and future-ready professionals.',
+              'Speed and Agility - Our team moves fast to match the right talent and deliver projects on time.',
+              'Commitment to Quality - We don’t just meet expectations — we aim to exceed them with every partnership.',
+              'Trusted Partnerships - Your success is our mission. We build long-term relationships based on trust and results.'
+            ].map((item, idx) => (
+              <li key={idx} className="flex items-center">
+                <span className="mr-4 text-teal-600">✔</span> {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* CONTACT SECTION */}
+      <section id="contact" className="bg-blue-50 py-20 px-4 text-gray-900 pt-28 overflow-x-hidden">
+        <div className="max-w-6xl mx-auto flex flex-col md:grid md:grid-cols-2 gap-12">
+          {/* Contact Info */}
+          <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl">
+            <h2 className="text-3xl font-bold mb-6 text-teal-600">Contact Us</h2>
+            <p className="text-lg mb-8">
+              Have any questions? Reach out to us using the contact details below, or fill out the form and we'll get back to you as soon as possible.
+            </p>
+            <div className="space-y-6">
+              <div className="flex items-center space-x-4">
+                <span className="text-teal-600">📧</span>
+                <span className="font-semibold">Email:</span> <span>info@staffinitysolutions.com</span>
+              </div>
+              <div className="flex items-center space-x-4">
+                <span className="text-teal-600">📞</span>
+                <span className="font-semibold">Phone:</span> <span>+1 945-348-0140</span>
+              </div>
+              <div className="flex items-center space-x-4">
+                <span className="text-teal-600">📍</span>
+                <span className="font-semibold">Address:</span> <span>5121 Collin McKinney Pkwy Ste 500 #1090, McKinney, TX 75070</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="bg-white text-gray-900 p-8 rounded-lg shadow-xl mt-10 md:mt-0">
+            <h3 className="text-2xl font-semibold mb-4">Get In Touch</h3>
+            <form
+              action="https://formspree.io/f/mpwdwpno"
+              method="POST"
+              className="space-y-4 text-left"
+            >
+              <div className="flex flex-col md:flex-row gap-4">
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  className="w-full md:w-1/2 p-3 border rounded"
+                  required
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  className="w-full md:w-1/2 p-3 border rounded"
+                  required
+                />
+              </div>
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder="Your Email"
+                className="w-full p-3 border rounded"
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone (optional)"
+                className="w-full p-3 border rounded"
+              />
+              <textarea
+                name="message"
+                required
+                placeholder="Your Message"
+                className="w-full p-3 border rounded h-32"
+              />
+              <button
+                type="submit"
+                className="w-full bg-teal-600 text-white py-3 rounded mt-4 hover:bg-teal-500 transition-all"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
 
       {/* FOOTER */}
       <footer className="text-center bg-gray-900 text-white py-6">
