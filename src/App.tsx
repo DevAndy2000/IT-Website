@@ -12,14 +12,11 @@ const App: React.FC = () => {
 
       if (window.innerWidth >= 768) {
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          // Scrolling down
           setShowHeader(false);
         } else {
-          // Scrolling up
           setShowHeader(true);
         }
       } else {
-        // On mobile, always show header (for hamburger)
         setShowHeader(true);
       }
 
@@ -37,7 +34,7 @@ const App: React.FC = () => {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false); // Close menu after click
+      setIsMenuOpen(false);
     }
   };
 
@@ -45,7 +42,7 @@ const App: React.FC = () => {
     <div className="font-sans text-gray-900 overflow-x-hidden">
       {/* NAVIGATION BAR */}
       <header
-        className={`bg-[#F6F5F1] text-gray-900 py-2 md:py-3 fixed w-full top-0 z-50 shadow-lg transition-transform duration-300 ${
+        className={`bg-[#F6F5F1] text-gray-900 py-2 md:py-3 fixed w-full top-0 z-40 shadow-lg transition-transform duration-300 ${
           showHeader ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
@@ -54,16 +51,6 @@ const App: React.FC = () => {
             <a href="/" className="text-2xl font-bold text-gray-900 hover:text-teal-400 transition-all">
               <img src="/assets/logo.png" alt="StaffinITy Solutions Logo" className="h-16 md:h-20" />
             </a>
-          </div>
-
-          {/* Mobile Hamburger Menu Icon */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-3xl p-2 bg-white rounded-full shadow-md transition-all"
-            >
-              {isMenuOpen ? '✖' : '☰'}
-            </button>
           </div>
 
           {/* Desktop Menu */}
@@ -80,6 +67,16 @@ const App: React.FC = () => {
           </div>
         </nav>
       </header>
+
+      {/* Mobile Hamburger Button (Always Fixed) */}
+      <div className="md:hidden fixed top-4 right-4 z-50">
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="text-3xl p-2 bg-white rounded-full shadow-md transition-all"
+        >
+          {isMenuOpen ? '✖' : '☰'}
+        </button>
+      </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
@@ -115,16 +112,9 @@ const App: React.FC = () => {
       </div>
 
       {/* SERVICES SECTION */}
-      {/* (Same as your previous content) */}
-
       {/* ABOUT US SECTION */}
-      {/* (Same as your previous content) */}
-
       {/* WHY CHOOSE US SECTION */}
-      {/* (Same as your previous content) */}
-
       {/* CONTACT SECTION */}
-      {/* (Same as your previous content) */}
 
       {/* FOOTER */}
       <footer className="text-center bg-gray-900 text-white py-6">
